@@ -8,6 +8,8 @@
   </head>
   <body>
     <h2>Student Marks Management</h2>
+
+    <!-- Table -->
     <div class="section">
       <h3>Student Marks Table</h3>
       <table id="marksTable">
@@ -22,7 +24,7 @@
           <tr>
             <td>Bony</td>
             <td>4973</td>
-            <td>88</td>
+            <td>88</td> <!-- Chose the 'faisal' version -->
           </tr>
           <tr>
             <td>Faisal</td>
@@ -33,6 +35,7 @@
       </table>
     </div>
 
+    <!-- Add Section -->
     <div class="sectioninput">
       <h3>Add New Data</h3>
       <div>
@@ -47,20 +50,20 @@
         <label for="marksInput">Marks: </label>
         <input type="number" id="marksInput" placeholder="Enter Marks" />
       </div>
-
       <button onclick="addData()">Add</button>
     </div>
 
+    <!-- Modify Section -->
     <div class="sectionmodify">
       <h3>Modify Marks</h3>
       <div>
         <label for="modifyId">Student ID to Modify: </label>
         <input type="text" id="modifyId" placeholder="Enter Student ID" />
       </div>
-
       <button onclick="openModifyPopup()">Modify</button>
     </div>
 
+    <!-- Popup -->
     <div class="popup" id="modifyPopup">
       <button class="close" onclick="closeModifyPopup()">X</button>
       <h3>Modify Marks</h3>
@@ -69,6 +72,7 @@
       <button onclick="saveModifiedMarks()">Save</button>
     </div>
 
+    <!-- JavaScript -->
     <script>
       function addData() {
         const name = document.getElementById("nameInput").value;
