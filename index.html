@@ -8,6 +8,8 @@
   </head>
   <body>
     <h2>Student Marks Management</h2>
+
+    <!-- Table -->
     <div class="section">
       <h3>Student Marks Table</h3>
       <table id="marksTable">
@@ -22,7 +24,7 @@
           <tr>
             <td>Bony</td>
             <td>4973</td>
-            <td>85</td>
+            <td>88</td> <!-- Chose the 'faisal' version -->
           </tr>
           <tr>
             <td>Faisal</td>
@@ -33,6 +35,7 @@
       </table>
     </div>
 
+    <!-- Add Section -->
     <div class="sectioninput">
       <h3>Add New Data</h3>
       <div>
@@ -47,27 +50,127 @@
         <label for="marksInput">Marks: </label>
         <input type="number" id="marksInput" placeholder="Enter Marks" />
       </div>
-
       <button onclick="addData()">Add</button>
     </div>
 
+    <!-- Modify Section -->
     <div class="sectionmodify">
       <h3>Modify Marks</h3>
       <div>
         <label for="modifyId">Student ID to Modify: </label>
         <input type="text" id="modifyId" placeholder="Enter Student ID" />
       </div>
-
       <button onclick="openModifyPopup()">Modify</button>
     </div>
 
+    <!-- Popup -->
     <div class="popup" id="modifyPopup">
-      <button class="close" onclick="closeModifyPopup()">Modify Marks</button>
-      
+      <button class="close" onclick="closeModifyPopup()">X</button>
+      <h3>Modify Marks</h3>
       <label for="newMarks">New Marks: </label>
       <input type="number" id="newMarks" placeholder="Enter New Marks" />
       <button onclick="saveModifiedMarks()">Save</button>
     </div>
-</body>
 
+    <!-- JavaScript -->
+    <script>
+      function addData() {
+        const name = document.getElementById("nameInput").value;
+        const id = document.getElementById("idInput").value;
+        const marks = document.getElementById("marksInput").value;
+
+        if (name === "" || id === "" || marks === "") {
+          alert("Please fill all fields");
+          return;
+        }
+
+        const table = document
+          .getElementById("marksTable")
+          .getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+
+        cell1.textContent = name;
+        cell2.textContent = id;
+        cell3.textContent = marks;
+
+        document.getElementById("nameInput").value = "";
+        document.getElementById("idInput").value = "";
+        document.getElementById("marksInput").value = "";
+      }
+
+      function openModifyPopup() {
+        const modifyId = document.getElementById("modifyId").value;
+
+        if (modifyId === "") {
+          alert("Please enter a Student ID to modify");
+          return;
+        }
+
+        const table = document.getElementById("marksTable");
+        const rows = table
+          .getElementsByTagName("tbody")[0]
+          .getElementsByTagName("tr");
+
+        let found = false;
+
+        for (let row of rows) {
+          const cells = row.getElementsByTagName("td");
+          const studentId = cells[1].textContent;
+
+          if (studentId === modifyId) {
+            document.getElementById("modifyPopup").style.display = "block";
+            document.getElementById("newMarks").value = cells[2].textContent;
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          alert("Student ID not found");
+        }
+      }
+
+      function saveModifiedMarks() {
+        const newMarks = document.getElementById("newMarks").value;
+
+        if (newMarks === "") {
+          alert("Please enter new marks");
+          return;
+        }
+
+        const modifyId = document.getElementById("modifyId").value;
+        const table = document.getElementById("marksTable");
+        const rows = table
+          .getElementsByTagName("tbody")[0]
+          .getElementsByTagName("tr");
+
+        let found = false;
+
+        for (let row of rows) {
+          const cells = row.getElementsByTagName("td");
+          const studentId = cells[1].textContent;
+
+          if (studentId === modifyId) {
+            cells[2].textContent = newMarks;
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          alert("Student ID not found");
+        }
+
+        closeModifyPopup();
+      }
+
+      function closeModifyPopup() {
+        document.getElementById("modifyPopup").style.display = "none";
+      }
+    </script>
+  </body>
 </html>
